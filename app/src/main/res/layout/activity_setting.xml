@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.cskaoyan.mobile.mobilemanager.SettingActivity">
+
+    <TextView
+        style="@style/myPageTile"
+        android:text="设置中心"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="5dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="自动更新"
+            android:id="@+id/tv_setting_autoupdate"
+            android:textSize="20sp"
+            android:layout_margin="3dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_setting_autoupdate"
+            android:id="@+id/tv_setting_updatestatus"
+            android:layout_margin="3dp"/>
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:id="@+id/cb_setting_update"
+            android:layout_marginRight="10dp"/>
+        </RelativeLayout>
+</LinearLayout>

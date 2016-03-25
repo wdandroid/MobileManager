@@ -54,6 +54,7 @@ public class SplashActivity extends Activity {
     private static final  int MSG_ERROR_URL =-2;
     private static final  int MSG_ERROR_IO =-3;
     private static final  int MSG_ERROR_JSON =-4;
+    private static final  int MSG_WATI_TIMEOUT =2;
 
 
     @Override
@@ -67,12 +68,43 @@ public class SplashActivity extends Activity {
 
 
         current_version = getVersionName();
-        tv_splash_version.setText("Version : "+current_version);
+        tv_splash_version.setText("Version : " + current_version);
 
-        getNewVersion();
+        if (MyApplication.configsp.getBoolean("autoupdate",true))
+            getNewVersion();
+        else
+            waitaWhile();
 
     }
 
+    private void waitaWhile() {
+
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                /*runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        enterHome();
+
+                    }
+                });*/
+
+                Message msg = myhandler.obtainMessage();
+                msg.what=MSG_WATI_TIMEOUT;
+                myhandler.sendMessage(msg);
+            }
+        }).start();
+    }
 
 
     private String getVersionName(){
@@ -140,6 +172,11 @@ public class SplashActivity extends Activity {
                 case MSG_ERROR_URL :
                     Toast.makeText(SplashActivity.this,MSG_ERROR_URL+"",Toast.LENGTH_LONG).show();
                     enterHome();
+                    break;
+
+                case MSG_WATI_TIMEOUT:
+                    enterHome();
+
                     break;
             }
         }
