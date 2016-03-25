@@ -1,5 +1,6 @@
 package com.cskaoyan.mobile.mobilemanager;
 
+import android.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -30,6 +31,11 @@ public class HomeActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        //final ActionBar actionBar = getActionBar();
+        final android.support.v7.app.ActionBar supportActionBar = getSupportActionBar();
+        supportActionBar.hide();
+
         tv_home_welcome = (TextView) findViewById(R.id.tv_home_welcome);
         tv_home_welcome.setText("欢迎您,新用户,我们的应用可以保卫您手机的安全！");
         //方法2,让控件处于选中状态
@@ -40,7 +46,6 @@ public class HomeActivity extends ActionBarActivity {
         //ListView
         gv_home_content = (GridView) findViewById(R.id.gv_home_content);
         gv_home_content.setAdapter(new MyAdpter());
-
         gv_home_content.setOnItemClickListener(new MyItemOnClickListener());
 
     }

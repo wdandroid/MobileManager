@@ -1,5 +1,6 @@
 package com.cskaoyan.mobile.mobilemanager;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -39,7 +40,7 @@ import java.net.URI;
 import java.net.URL;
  import java.util.logging.LogRecord;
 
-public class SplashActivity extends ActionBarActivity {
+public class SplashActivity extends Activity {
 
     private static final String TAG = "SplashActivity";
 
