@@ -12,8 +12,12 @@ import android.os.Message;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cskaoyan.mobile.application.MyApplication;
 import com.cskaoyan.mobile.utils.HTTPUtils;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -39,17 +43,32 @@ public class SplashActivity extends ActionBarActivity {
 
     private static final String TAG = "SplashActivity";
 
-    private static final  int MSG_OK =1;
     private String current_version;
+    private TextView tv_splash_version;
+    private ProgressBar pb_splash_download;
+
+    //
+    private static final  int MSG_OK =1;
+    private static final  int MSG_ERROR_INTERSEVER =-1;
+    private static final  int MSG_ERROR_URL =-2;
+    private static final  int MSG_ERROR_IO =-3;
+    private static final  int MSG_ERROR_JSON =-4;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        current_version = getVersionName();
-        getNewVersion();
 
+        tv_splash_version = (TextView) findViewById(R.id.tv_splash_version);
+        pb_splash_download = (ProgressBar) findViewById(R.id.pb_splash_download);
+
+
+        current_version = getVersionName();
+        tv_splash_version.setText("Version : "+current_version);
+
+        getNewVersion();
 
     }
 
@@ -103,6 +122,24 @@ public class SplashActivity extends ActionBarActivity {
                     }
 
                     break;
+
+
+                case MSG_ERROR_INTERSEVER :
+                    Toast.makeText(SplashActivity.this,MSG_ERROR_INTERSEVER+"",Toast.LENGTH_LONG).show();
+                    enterHome();
+                    break;
+                case MSG_ERROR_IO :
+                    Toast.makeText(SplashActivity.this,MSG_ERROR_IO+"",Toast.LENGTH_LONG).show();
+                    enterHome();
+                    break;
+                case MSG_ERROR_JSON :
+                    Toast.makeText(SplashActivity.this,MSG_ERROR_JSON+"",Toast.LENGTH_LONG).show();
+                    enterHome();
+                    break;
+                case MSG_ERROR_URL :
+                    Toast.makeText(SplashActivity.this,MSG_ERROR_URL+"",Toast.LENGTH_LONG).show();
+                    enterHome();
+                    break;
             }
         }
     };
@@ -110,7 +147,7 @@ public class SplashActivity extends ActionBarActivity {
     public void update(final String[] info){
 
         //
-        Log.i(TAG,"update");
+        Log.i(TAG, "update");
 
         new AlertDialog.Builder(this)
                 .setTitle("发现新版本")
@@ -121,8 +158,8 @@ public class SplashActivity extends ActionBarActivity {
                         //download
 
                         AsyncHttpClient client = new AsyncHttpClient();
-                        client.get("http://192.168.3.36/MobileManager"+info[2], new MyAsyncHttpHandler() );
-
+                        client.get(MyApplication.SERVER_PATH+info[2], new MyAsyncHttpHandler() );
+                        pb_splash_download.setVisibility(View.VISIBLE);
                        // client.get
 
 
@@ -132,7 +169,7 @@ public class SplashActivity extends ActionBarActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         //进入到主页面
-
+                        enterHome();
                     }
                 })
                 .show();
@@ -154,12 +191,16 @@ public class SplashActivity extends ActionBarActivity {
                 FileOutputStream fos = new FileOutputStream(file);
                 fos.write(bytes);
                 fos.close();
-
                 install(file);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
+                //需要进入主页面
+                enterHome();
+
             } catch (IOException e) {
                 e.printStackTrace();
+                enterHome();
+
             }
 
         }
@@ -168,7 +209,14 @@ public class SplashActivity extends ActionBarActivity {
         public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
             Toast.makeText(SplashActivity.this,"下载失败",Toast.LENGTH_LONG).show();
             //进入到主页面
+            enterHome();
+        }
 
+        @Override
+        public void onProgress(long bytesWritten, long totalSize) {
+            super.onProgress(bytesWritten, totalSize);
+            pb_splash_download.setMax((int)totalSize);
+            pb_splash_download.setProgress((int)bytesWritten);
         }
     }
 
@@ -178,9 +226,26 @@ public class SplashActivity extends ActionBarActivity {
         intent.setAction("android.intent.action.VIEW");
         intent.addCategory("android.intent.category.DEFAULT");
         intent.setDataAndType(Uri.fromFile(f), "application/vnd.android.package-archive");
-        startActivity(intent);
+        startActivityForResult(intent, 100);
     }
 
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode==RESULT_CANCELED){
+            //进入主页面
+            enterHome();
+        }
+
+
+    }
+
+    private void enterHome() {
+        startActivity(new Intent(this,HomeActivity.class));
+        finish();
+    }
 
     private void getNewVersion(){
 
@@ -190,13 +255,15 @@ public class SplashActivity extends ActionBarActivity {
             public void run() {
                 super.run();
 
-                String path ="http://192.168.3.36/MobileManager/version.json";
+                String path =MyApplication.SERVER_PATH+"/version.json";
+                Message msg = myhandler.obtainMessage();
+
                 try {
                     URL url = new URL(path);
                     HttpURLConnection  conn = (HttpURLConnection) url.openConnection();
 
                     conn.setRequestMethod("GET");
-                    conn.setConnectTimeout(5000);
+                    conn.setConnectTimeout(2000);
                     conn.setReadTimeout(5000);
 
                     conn.connect();
@@ -218,18 +285,30 @@ public class SplashActivity extends ActionBarActivity {
                         String[] newversioninfo = {newVersion,newVersiondescription,downlaodurl};
 
                         Log.i(TAG,newVersion+":"+downlaodurl);
-                        Message msg = myhandler.obtainMessage();
                         msg.what=MSG_OK;
                         msg.obj=newversioninfo;
-                        myhandler.sendMessage(msg);
+
+                    }else {
+
+                        if (ret==500){
+                            msg.what=MSG_ERROR_INTERSEVER;
+                        }
 
                     }
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
+                    msg.what=MSG_ERROR_URL;
+
                 } catch (IOException e) {
                     e.printStackTrace();
+                    msg.what=MSG_ERROR_IO;
+
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    msg.what=MSG_ERROR_JSON;
+
+                }finally {
+                    myhandler.sendMessage(msg);
                 }
 
 
