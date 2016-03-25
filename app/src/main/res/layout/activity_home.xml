@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.cskaoyan.mobile.mobilemanager.HomeActivity">
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="功能列表"
+    android:gravity="center"
+    android:textSize="30sp"
+    android:padding="15dp"
+    android:background="#AEFF75"
+    />
+    <com.cskaoyan.mobile.view.MyTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="2dp"
+        android:singleLine="true"
+        android:ellipsize="marquee"
+        android:text="欢迎您，新用户，我们的应用可以保卫您手机的安全！保卫您手机的安全！!!!!!!"
+        android:id="@+id/tv_home_welcome"/>
+    <GridView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:numColumns="3"
+        android:gravity="center"
+        android:id="@+id/gv_home_content"></GridView>
+</LinearLayout>
