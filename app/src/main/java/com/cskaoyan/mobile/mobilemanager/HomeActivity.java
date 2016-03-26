@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cskaoyan.mobile.application.MyApplication;
+import com.cskaoyan.mobile.utils.Md5Utils;
 
 public class HomeActivity extends ActionBarActivity {
 
@@ -144,19 +145,29 @@ public class HomeActivity extends ActionBarActivity {
             public void onClick(View v) {
 
                 String pwd = et_condialog_pwd.getText().toString();
-                String savepwd=   MyApplication.configsp.getString("phonesafe_pwd","");
 
-                //savepwd 还是可能为空的。时间差
-                if (!savepwd.isEmpty()){
+                if (!pwd.isEmpty()){
 
-                    if(savepwd.equals(pwd)){
-                        dialog.dismiss();
-                        startActivity(new Intent(HomeActivity.this,PhoneSafeActivity.class));
+                   String pwddigest =  Md5Utils.getMd5Digest(pwd);
+
+                    String savepwd=   MyApplication.configsp.getString("phonesafe_pwd", "");
+
+                    //savepwd 还是可能为空的。时间差
+                    if (!savepwd.isEmpty()){
+                        if(savepwd.equals(pwddigest)){
+                            dialog.dismiss();
+                            startActivity(new Intent(HomeActivity.this,PhoneSafeActivity.class));
+                        }
+                        else
+                            Toast.makeText(HomeActivity.this, "输入密码有误，请重输！", Toast.LENGTH_SHORT).show();
                     }
-                    else
-                        Toast.makeText(HomeActivity.this, "输入密码有误，请重输！", Toast.LENGTH_SHORT).show();
-
                 }
+                else
+                    Toast.makeText(HomeActivity.this, "输入密码不能为空，请重输！", Toast.LENGTH_SHORT).show();
+
+
+
+
 
 
 
@@ -203,7 +214,7 @@ public class HomeActivity extends ActionBarActivity {
                          /*MyApplication.editor.putString("phonesafe_pwd",pwd);
                          MyApplication.editor.commit();*/
 
-                        MyApplication.setConfigValue("phonesafe_pwd", pwd);
+                        MyApplication.setConfigValue("phonesafe_pwd", Md5Utils.getMd5Digest(pwd));
                         dialog.dismiss();
 
                     } else {
