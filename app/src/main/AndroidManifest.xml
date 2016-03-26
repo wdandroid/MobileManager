@@ -14,7 +14,10 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".SplashActivity"
+            android:icon="@drawable/callmsgsafe"
+            android:label="mobilesafe"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
+            r
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,7 +25,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".HomeActivity" />
-        <activity android:name=".SettingActivity"></activity>
+        <activity android:name=".SettingActivity" />
+        <activity android:name=".PhoneSafeActivity"></activity>
     </application>
 
 </manifest>
