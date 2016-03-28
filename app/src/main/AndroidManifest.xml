@@ -5,6 +5,11 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.SEND_SMS"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
     <application
         android:name="com.cskaoyan.mobile.application.MyApplication"
@@ -18,7 +23,6 @@
             android:icon="@drawable/callmsgsafe"
             android:label="mobilesafe"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
-            r
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -26,14 +30,33 @@
             </intent-filter>
         </activity>
         <activity android:name=".HomeActivity" />
-        <activity android:name=".SettingActivity" />
+        <activity android:name=".SettingActivity"
+            android:launchMode="singleTask" />
         <activity android:name=".PhoneSafeActivity" />
-        <activity android:name=".Setup1Activity"
-            android:launchMode="singleTask"/>
-        <activity android:name=".Setup2Activity"
-            android:launchMode="singleTask"/>
-        <activity android:name=".Setup3Activity"
-            android:launchMode="singleTask"></activity>
+        <activity
+            android:name=".Setup1Activity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".Setup2Activity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".Setup3Activity"
+            android:launchMode="singleTask" />
+        <activity android:name=".ContactListActivity" />
+        <activity android:name=".Setup4Activity"
+            android:launchMode="singleTask" ></activity>
+        <receiver android:name="com.cskaoyan.mobile.receiver.MyBootCompleteReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
+        <receiver android:name="com.cskaoyan.mobile.receiver.MySmsReceiver">
+            <intent-filter>
+                <action android:name="android.provider.Telephony.SMS_RECEIVED"/>
+            </intent-filter>
+        </receiver>
+
+        <service android:name="com.cskaoyan.mobile.service.MyUpdateLocationService"/>
     </application>
 
 </manifest>

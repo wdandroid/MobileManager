@@ -1,12 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
     tools:context="com.cskaoyan.mobile.mobilemanager.PhoneSafeActivity">
 
-</RelativeLayout>
+    <TextView
+        style="@style/myPageTile"
+        android:text="手机防盗"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="安全号码:"
+            android:layout_marginLeft="10dp"
+            android:textSize="20sp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="5555"
+            android:layout_marginRight="10dp"
+             android:textSize="20sp"
+            android:id="@+id/tv_phonesafe_safenum"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="防盗保护是否开启:"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:textSize="20sp"/>
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/unlock"
+            android:layout_marginRight="10dp"
+             android:id="@+id/iv_phonesafe_enalbe"/>
+
+    </LinearLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="重新进入设置向导"
+        android:onClick="resetup"/>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="功能简介:"
+        android:padding="4dp"
+        android:textSize="20sp"
+        ></TextView>
+    <TextView
+        style="@style/mysetuptext"
+        android:text="SIM卡变更报警"
+        ></TextView>
+    <TextView
+        style="@style/mysetuptext"
+        android:text="播放报警音乐:*#alarm#*"
+        ></TextView>
+    <TextView
+        style="@style/mysetuptext"
+        android:text="GPS追踪:*#location#*"
+        ></TextView>
+    <TextView
+        style="@style/mysetuptext"
+        android:text="远程擦除数据:*#wipedata#*"
+        ></TextView>
+    <TextView
+        style="@style/mysetuptext"
+        android:text="远程锁屏:*#lockscreen#*"
+        ></TextView>
+
+</LinearLayout>

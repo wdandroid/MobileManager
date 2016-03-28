@@ -55,7 +55,12 @@ public class Setup2Activity extends ActionBarActivity {
     }
 
     public  void next(View v){
-        startActivity(new Intent(this,Setup3Activity.class));
-
+        
+        String imsi = MyApplication.configsp.getString("imsi", "");
+        
+        if (!imsi.isEmpty())
+           startActivity(new Intent(this, Setup3Activity.class));
+        else
+            Toast.makeText(Setup2Activity.this, "请绑定sim卡！否则无法使用本功能!", Toast.LENGTH_SHORT).show();
     }
 }

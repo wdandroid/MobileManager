@@ -31,5 +31,6 @@ public class SettingActivity extends ActionBarActivity {
         supportActionBar.hide();
 
 
+
     }
 }

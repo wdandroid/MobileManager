@@ -26,14 +26,17 @@ public class Setup3Activity extends ActionBarActivity {
 
 
     //获取联系人：
-    public void selectcontact(View v){
-
-        //方法1，跳到系统选择联系人的页面去选择
-
+    //方法1，跳到系统选择联系人的页面去选择
+/*    public void selectcontact(View v){
         Intent pickContactIntent = new Intent(Intent.ACTION_PICK, Uri.parse("content://contacts"));
         pickContactIntent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_TYPE);
-
         startActivityForResult(pickContactIntent, 100);
+    }*/
+
+    //方法2，跳到系统选择联系人的页面去选择
+    public void selectcontact(View v){
+
+        startActivityForResult(new Intent(this, ContactListActivity.class), 200);
 
 
     }
@@ -60,6 +63,16 @@ public class Setup3Activity extends ActionBarActivity {
 
             }
         }
+        else if (resultCode ==1000){
+
+            if (requestCode==200){
+
+                String number =  data.getStringExtra("number");
+                et_setup3_safenum.setText(number);
+
+            }
+
+        }
 
 
     }
@@ -76,7 +89,7 @@ public class Setup3Activity extends ActionBarActivity {
 
             MyApplication.setConfigValue("safenum",s);
             //
-            //startActivity(new Intent(this,Setup4Activity.class));
+            startActivity(new Intent(this,Setup4Activity.class));
 
 
         }else{
