@@ -29,4 +29,6 @@ public class MyApplication extends Application{
         editor.putString(key,value);
         editor.commit();
     }
+
+
 }

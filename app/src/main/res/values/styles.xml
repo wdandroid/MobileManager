@@ -21,4 +21,22 @@
         <item name="android:padding">15dp</item>
         <item name="android:background">#AEFF75</item>
     </style>
+
+
+   <!-- android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:drawableLeft="@android:drawable/star_big_on"
+    android:padding="4dp"
+    android:textSize="20sp"
+    android:gravity="center_vertical"-->
+
+
+    <style name="mysetuptext">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:padding">4dp</item>
+        <item name="android:drawableLeft">@android:drawable/star_big_on</item>
+    </style>
 </resources>

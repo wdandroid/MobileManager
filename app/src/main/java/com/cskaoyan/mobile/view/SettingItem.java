@@ -29,6 +29,9 @@ public class SettingItem extends RelativeLayout implements View.OnClickListener{
     private String offstring;
     private String sp_keyname;
 
+    //
+    private MyOnclickListen mylistener;
+
     public SettingItem(Context context) {
         super(context);
         init(null);
@@ -55,6 +58,7 @@ public class SettingItem extends RelativeLayout implements View.OnClickListener{
             itemtitle = attrs.getAttributeValue("http://schemas.android.com/apk/res-auto", "itemtitle");
             onstring = attrs.getAttributeValue("http://schemas.android.com/apk/res-auto", "onstring");
             offstring = attrs.getAttributeValue("http://schemas.android.com/apk/res-auto", "offstring");
+            //如果没有设置该属性，sp_keyname 得到null
             sp_keyname = attrs.getAttributeValue("http://schemas.android.com/apk/res-auto", "sp_keyname");
 
 
@@ -63,16 +67,19 @@ public class SettingItem extends RelativeLayout implements View.OnClickListener{
             tv_setting_autoupdate.setText(itemtitle);
 
 
-            if(MyApplication.configsp.getBoolean(sp_keyname,true)){
-                tv_setting_updatestatus.setText(onstring);
-                cb_setting_update.setChecked(true);
+            if ( sp_keyname!=null){
+                if(MyApplication.configsp.getBoolean(sp_keyname,true)){
+                    tv_setting_updatestatus.setText(onstring);
+                    cb_setting_update.setChecked(true);
 
-            }
-            else{
-                tv_setting_updatestatus.setText(offstring);
-                cb_setting_update.setChecked(false);
+                }
+                else{
+                    tv_setting_updatestatus.setText(offstring);
+                    cb_setting_update.setChecked(false);
 
+                }
             }
+
 
         }
 
@@ -82,8 +89,20 @@ public class SettingItem extends RelativeLayout implements View.OnClickListener{
     }
 
 
+    public interface MyOnclickListen{
+
+       void  myCheckOnclick();
+       void  myCancleOnclick();
+    }
+
+
+    public void setMyOnclickListener(MyOnclickListen l){
+        mylistener =l;
+    }
+
     @Override
     public void setOnClickListener(OnClickListener l) {
+
         super.setOnClickListener(this);
     }
 
@@ -99,6 +118,9 @@ public class SettingItem extends RelativeLayout implements View.OnClickListener{
             Log.i(TAG, checked + "取消");
             editor.putBoolean(sp_keyname,false);
             editor.commit();
+            if (mylistener!=null){
+                mylistener.myCancleOnclick();
+            }
 
 
         }
@@ -110,6 +132,10 @@ public class SettingItem extends RelativeLayout implements View.OnClickListener{
             editor.putBoolean(sp_keyname, true);
             editor.commit();
 
+
+            if (mylistener!=null){
+                mylistener.myCheckOnclick();
+            }
         }
 
 

@@ -1,0 +1,88 @@
+package com.cskaoyan.mobile.mobilemanager;
+
+import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
+import android.provider.ContactsContract;
+import android.support.v7.app.ActionBarActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import com.cskaoyan.mobile.application.MyApplication;
+
+public class Setup3Activity extends ActionBarActivity {
+
+    private EditText et_setup3_safenum;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_setup3);
+
+        et_setup3_safenum = (EditText) findViewById(R.id.et_setup3_safenum);
+    }
+
+
+    //获取联系人：
+    public void selectcontact(View v){
+
+        //方法1，跳到系统选择联系人的页面去选择
+
+        Intent pickContactIntent = new Intent(Intent.ACTION_PICK, Uri.parse("content://contacts"));
+        pickContactIntent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_TYPE);
+
+        startActivityForResult(pickContactIntent, 100);
+
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+
+        if (resultCode==RESULT_OK){
+
+            if (requestCode==100){
+
+                Uri contactUri = data.getData();
+                String[] projection = {ContactsContract.CommonDataKinds.Phone.NUMBER};
+
+                Cursor cursor = getContentResolver().query(contactUri, projection, null, null, null);
+                cursor.moveToFirst();
+                // Retrieve the phone number from the NUMBER column
+                int column = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
+                String number = cursor.getString(column);
+
+                et_setup3_safenum.setText(number);
+
+            }
+        }
+
+
+    }
+
+    public void previous(View v){
+        startActivity(new Intent(this,Setup2Activity.class));
+
+    }
+
+    public void next(View v){
+
+        final String s = et_setup3_safenum.getText().toString();
+        if (!s.isEmpty()){
+
+            MyApplication.setConfigValue("safenum",s);
+            //
+            //startActivity(new Intent(this,Setup4Activity.class));
+
+
+        }else{
+            Toast.makeText(Setup3Activity.this, "安全号码不能为空！", Toast.LENGTH_SHORT).show();
+        }
+
+
+    }
+}
