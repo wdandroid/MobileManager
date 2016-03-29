@@ -5,7 +5,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.View;
 
-public class Setup1Activity extends ActionBarActivity {
+public class Setup1Activity extends SetupBaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,5 +18,9 @@ public class Setup1Activity extends ActionBarActivity {
         startActivity(new Intent(this,Setup2Activity.class));
 
 
+    }
+
+    @Override
+    public void previous(View v) {
     }
 }

@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import com.cskaoyan.mobile.application.MyApplication;
 
-public class Setup3Activity extends ActionBarActivity {
+public class Setup3Activity extends SetupBaseActivity {
 
     private EditText et_setup3_safenum;
 

@@ -39,6 +39,13 @@ android:orientation="vertical"
         settingitem:sp_keyname="anti_theif">
     </com.cskaoyan.mobile.view.SettingItem>
 
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="点此激活管理员权限"
+        android:onClick="active"
+        />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

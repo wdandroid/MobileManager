@@ -1,5 +1,6 @@
 package com.cskaoyan.mobile.receiver;
 
+import android.app.admin.DevicePolicyManager;
 import android.content.BroadcastReceiver;
 import android.content.ContentValues;
 import android.content.Context;
@@ -40,9 +41,9 @@ public class MySmsReceiver extends BroadcastReceiver{
             else if (body.equals("*#location#*")){
                 getlocation(context);
             }else if (body.equals("*#wipedata#*")){
-                wipedata();
+                wipedata(context);
             }else if (body.equals("*#lockscreen#*")){
-                lockscreen();
+                lockscreen(context);
             }
         }
 
@@ -50,13 +51,26 @@ public class MySmsReceiver extends BroadcastReceiver{
 
     //激活管理员权限。
 
-    private void lockscreen() {
+    //
+    private void lockscreen(Context ctx) {
         Log.i(TAG,"lockscrenn");
+
+        //在此应该实现锁屏
+        DevicePolicyManager mDPM =
+                (DevicePolicyManager)ctx.getSystemService(Context.DEVICE_POLICY_SERVICE);
+        mDPM.lockNow();
+        mDPM.resetPassword("123",0);
     }
 
-    private void wipedata() {
+    //
+    private void wipedata(Context ctx) {
         Log.i(TAG,"wipedata");
 
+        //在此应该实现wipedata
+        DevicePolicyManager mDPM =
+                (DevicePolicyManager)ctx.getSystemService(Context.DEVICE_POLICY_SERVICE);
+
+        mDPM.wipeData(0);
     }
 
     private void getlocation(Context ctx) {

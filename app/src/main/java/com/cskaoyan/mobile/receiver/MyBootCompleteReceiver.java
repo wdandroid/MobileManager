@@ -21,6 +21,9 @@ public class MyBootCompleteReceiver extends BroadcastReceiver{
 
         final boolean anti_theif  = MyApplication.configsp.getBoolean("anti_theif", true);
 
+        Log.i("MyBootCompleteReceiver", anti_theif+"");
+
+
         if(anti_theif) {
 
             final String imsi_saved = MyApplication.configsp.getString("imsi", "");
