@@ -6,10 +6,10 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
-    <uses-permission android:name="android.permission.SEND_SMS"/>
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
-    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:name="com.cskaoyan.mobile.application.MyApplication"
@@ -30,7 +30,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".HomeActivity" />
-        <activity android:name=".SettingActivity"
+        <activity
+            android:name=".SettingActivity"
             android:launchMode="singleTask" />
         <activity android:name=".PhoneSafeActivity" />
         <activity
@@ -43,34 +44,46 @@
             android:name=".Setup3Activity"
             android:launchMode="singleTask" />
         <activity android:name=".ContactListActivity" />
-        <activity android:name=".Setup4Activity"
-            android:launchMode="singleTask" ></activity>
+        <activity
+            android:name=".Setup4Activity"
+            android:launchMode="singleTask" />
+
         <receiver android:name="com.cskaoyan.mobile.receiver.MyBootCompleteReceiver">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
         <receiver android:name="com.cskaoyan.mobile.receiver.MySmsReceiver">
             <intent-filter>
-                <action android:name="android.provider.Telephony.SMS_RECEIVED"/>
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
         </receiver>
 
-        <service android:name="com.cskaoyan.mobile.service.MyUpdateLocationService"/>
+        <service android:name="com.cskaoyan.mobile.service.MyUpdateLocationService" />
 
-        <!--For Device Admin-->
+        <!-- For Device Admin -->
 
-        <receiver android:name="com.cskaoyan.mobile.receiver.MyDeviceAdminReceiver"
-            android:label="@string/sample_device_admin"
+        <receiver
+            android:name="com.cskaoyan.mobile.receiver.MyDeviceAdminReceiver"
             android:description="@string/sample_device_admin_description"
+            android:label="@string/sample_device_admin"
             android:permission="android.permission.BIND_DEVICE_ADMIN">
-            <meta-data android:name="android.app.device_admin"
+            <meta-data
+                android:name="android.app.device_admin"
                 android:resource="@xml/device_admin_sample" />
+
             <intent-filter>
                 <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
             </intent-filter>
         </receiver>
 
+        <activity android:name=".AdvanceToolActivity" />
+        <activity android:name=".QueryLocationActivity" />
+
+        <service
+            android:name="com.cskaoyan.mobile.service.MyNumberLocationService"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>

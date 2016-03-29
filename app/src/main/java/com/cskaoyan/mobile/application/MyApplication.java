@@ -1,7 +1,10 @@
 package com.cskaoyan.mobile.application;
 
 import android.app.Application;
+import android.content.Intent;
 import android.content.SharedPreferences;
+
+import com.cskaoyan.mobile.service.MyNumberLocationService;
 
 /**
  * Created by Lan on 2016/3/25.
@@ -21,6 +24,8 @@ public class MyApplication extends Application{
          configsp=getSharedPreferences("config",MODE_PRIVATE);
 
          editor =configsp.edit();
+
+        startService(new Intent(this, MyNumberLocationService.class));
     }
 
 
@@ -31,4 +36,9 @@ public class MyApplication extends Application{
     }
 
 
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+        stopService(new Intent(this, MyNumberLocationService.class));
+    }
 }
