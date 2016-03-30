@@ -36,6 +36,13 @@ public class MyApplication extends Application{
     }
 
 
+    public static void setConfigValue(String key, int value){
+
+        editor.putInt(key,value);
+        editor.commit();
+    }
+
+
     @Override
     public void onTerminate() {
         super.onTerminate();

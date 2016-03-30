@@ -15,6 +15,7 @@ import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cskaoyan.mobile.application.MyApplication;
 import com.cskaoyan.mobile.dao.NumberLoactionDao;
 import com.cskaoyan.mobile.mobilemanager.R;
 
@@ -97,8 +98,11 @@ public class MyNumberLocationService extends Service {
 
         params.gravity= Gravity.LEFT|Gravity.TOP;
 
-        params.x=200;
-        params.y=300;
+
+
+        params.x=           MyApplication.configsp.getInt("toastx",200);
+        params.y=           MyApplication.configsp.getInt("toasty",300)+50;
+
 
 //        params.windowAnimations = com.android.internal.R.style.Animation_Toast;
         params.type = WindowManager.LayoutParams.TYPE_TOAST;
