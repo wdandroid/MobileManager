@@ -20,4 +20,9 @@
         android:text="查询"
         android:onClick="query"/>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_queryloction_result"
+        android:text="查询结果"/>
 </LinearLayout>

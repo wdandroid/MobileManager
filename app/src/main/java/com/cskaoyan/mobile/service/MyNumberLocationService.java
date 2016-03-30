@@ -8,6 +8,7 @@ import android.os.IBinder;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -61,7 +62,7 @@ public class MyNumberLocationService extends Service {
                     String location =NumberLoactionDao.getNumberLocation(incomingNumber,MyNumberLocationService.this);
                     Log.i(TAG,location);
                     //第二部，我们需要把这个号码显示出来。
-                    Toast.makeText(MyNumberLocationService.this, location, Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(MyNumberLocationService.this, location, Toast.LENGTH_SHORT).show();
 
                     showLocationView(location);
                     break;
@@ -79,6 +80,8 @@ public class MyNumberLocationService extends Service {
         LayoutInflater inflate = (LayoutInflater)
                   getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         v = inflate.inflate(R.layout.mynumberlocation, null);
+        v.setBackgroundResource(R.drawable.call_locate_blue);
+
 
         TextView message = (TextView) v.findViewById(R.id.message);
         message.setText(location);
@@ -91,6 +94,11 @@ public class MyNumberLocationService extends Service {
         params.width = WindowManager.LayoutParams.WRAP_CONTENT;
         params.format = PixelFormat.TRANSLUCENT;
 
+
+        params.gravity= Gravity.LEFT|Gravity.TOP;
+
+        params.x=200;
+        params.y=300;
 
 //        params.windowAnimations = com.android.internal.R.style.Animation_Toast;
         params.type = WindowManager.LayoutParams.TYPE_TOAST;

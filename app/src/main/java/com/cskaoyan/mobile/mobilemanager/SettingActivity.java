@@ -1,5 +1,6 @@
 package com.cskaoyan.mobile.mobilemanager;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -32,5 +33,12 @@ public class SettingActivity extends ActionBarActivity {
 
 
 
+    }
+
+
+    public void settoastlocation(View v){
+
+
+        startActivity(new Intent(this,SetToastLocationActivity.class));
     }
 }

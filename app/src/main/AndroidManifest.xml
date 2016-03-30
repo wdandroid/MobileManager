@@ -83,7 +83,9 @@
         <service
             android:name="com.cskaoyan.mobile.service.MyNumberLocationService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
+
+        <activity android:name=".SetToastLocationActivity"></activity>
     </application>
 
 </manifest>
