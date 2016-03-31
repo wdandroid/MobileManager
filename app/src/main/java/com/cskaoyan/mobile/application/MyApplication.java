@@ -21,11 +21,13 @@ public class MyApplication extends Application{
 
          SERVER_PATH="http://192.168.3.34/MobileManager";
 
-         configsp=getSharedPreferences("config",MODE_PRIVATE);
+         configsp=getSharedPreferences("config", MODE_PRIVATE);
 
          editor =configsp.edit();
 
-        startService(new Intent(this, MyNumberLocationService.class));
+
+        if(configsp.getBoolean("showloaction",false))
+            startService(new Intent(this, MyNumberLocationService.class));
     }
 
 
@@ -46,6 +48,6 @@ public class MyApplication extends Application{
     @Override
     public void onTerminate() {
         super.onTerminate();
-        stopService(new Intent(this, MyNumberLocationService.class));
+
     }
 }

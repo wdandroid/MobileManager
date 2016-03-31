@@ -33,6 +33,9 @@ public class SettingActivity extends ActionBarActivity {
 
 
 
+        //关于显示号码归属地的设置项的初始化状态，应该和service是否在运行保持同步。
+        //注意 oncreate 和 onstart ？
+
     }
 
 

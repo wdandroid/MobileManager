@@ -85,7 +85,8 @@
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".SetToastLocationActivity"></activity>
+        <activity android:name=".SetToastLocationActivity" />
+        <activity android:name=".PackageManagerActivity"></activity>
     </application>
 
 </manifest>
