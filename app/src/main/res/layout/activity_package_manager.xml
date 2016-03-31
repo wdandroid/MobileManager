@@ -30,8 +30,22 @@
             android:id="@+id/tv_pacakge_sdcard"/>
     </LinearLayout>
 
-    <ListView
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/lv_package_appinfo"/>
+
+        android:layout_height="match_parent">
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/lv_package_appinfo"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+             android:background="#FFF"
+            android:textColor="#F00"
+            android:id="@+id/tv_applist_apptype"
+            />
+</FrameLayout>
+
 </LinearLayout>

@@ -79,6 +79,12 @@ public class PackageUtils {
         List<AppInfo> appinfolist = new ArrayList<AppInfo>();
 
 
+      /*  try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }*/
+
         final PackageManager packageManager = ctx.getPackageManager();
 
         final List<ApplicationInfo> installedApplications = packageManager.getInstalledApplications(0);
@@ -86,19 +92,20 @@ public class PackageUtils {
         for (ApplicationInfo appinfo: installedApplications) {
             //应用名字，应用图片，应用是否安装在SDcard上
            // appinfo.packageName;
-
             final CharSequence lable = appinfo.loadLabel(packageManager);
             final Drawable icon = appinfo.loadIcon(packageManager);
             boolean isSDCARD;
-          /* if( (appinfo.flags &   appinfo.FLAG_SYSTEM )!=0 ) //=   1 | 4;
+            boolean isSystem;
+
+            if( (appinfo.flags &   appinfo.FLAG_SYSTEM )!=0 ) //=   1 | 4;
            {
                //系统应用
-               isSDCARD=false;
+               isSystem=true;
            }else
            {
                //用户自己安装的应用
-               isSDCARD=true;
-           }*/
+               isSystem=false;
+           }
 
             if( (appinfo.flags &   appinfo.FLAG_EXTERNAL_STORAGE )!=0 ) //=   1 | 4;
             {
@@ -110,7 +117,7 @@ public class PackageUtils {
                 isSDCARD=false;
             }
 
-            AppInfo appInfo = new AppInfo(lable.toString(),icon,isSDCARD);
+            AppInfo appInfo = new AppInfo(lable.toString(),icon,isSDCARD,isSystem);
 
             appinfolist.add(appInfo);
         }

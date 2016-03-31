@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+  <ImageView
+      android:layout_width="40dp"
+      android:layout_height="40dp"
+      android:id="@+id/iv_applist_icon"
+      android:src="@drawable/app"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_applist_appname"
+        android:text="myapp1"
+        android:textSize="15sp"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@id/iv_applist_icon" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_applist_location"
+        android:text="sdcard"
+        android:textSize="10sp"
+        android:layout_toRightOf="@id/iv_applist_icon"
+        android:layout_below="@+id/tv_applist_appname"/>
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:id="@+id/iv_applist_lock"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/lock"/>
+
+</RelativeLayout>

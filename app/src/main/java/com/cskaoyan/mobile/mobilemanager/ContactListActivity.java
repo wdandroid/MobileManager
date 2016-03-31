@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.cskaoyan.mobile.bean.Contact;
 import com.cskaoyan.mobile.utils.ContactUtils;
+import com.cskaoyan.mobile.utils.MyAsyncTast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,24 +32,50 @@ public class ContactListActivity extends ActionBarActivity {
         lv_contactlist_showcontact = (ListView) findViewById(R.id.lv_contactlist_showcontact);
 
         //把联系人数据放入contactlist；
-        contactlist= ContactUtils.getAllContact(this);
-        lv_contactlist_showcontact.setAdapter(new MyContactAdpater());
-        lv_contactlist_showcontact.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+       // contactlist= ContactUtils.getAllContact(this);
+
+        //写一个工具类。
+        //让耗时操作在子线程内做，完成之后再去更新UI
+        //规定了一个流程
+        new MyAsyncTast(){
+
+
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                Contact onecontact=  contactlist.get(position);
-
-                Intent data = new Intent();
-
-                data.putExtra("number",onecontact.getNumber());
-
-                setResult(1000, data);
-
-                finish();
+            public void preBackgroud() {
+                //此处可以做初始化动作
             }
-        });
+
+            @Override
+            public void doinBackgroud() {
+                contactlist=ContactUtils.getAllContact(ContactListActivity.this);
+            }
+
+            @Override
+            public void doafterbackgroud() {
+
+
+                lv_contactlist_showcontact.setAdapter(new MyContactAdpater());
+                lv_contactlist_showcontact.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                        Contact onecontact=  contactlist.get(position);
+
+                        Intent data = new Intent();
+
+                        data.putExtra("number",onecontact.getNumber());
+
+                        setResult(1000, data);
+
+                        finish();
+                    }
+                });
+            }
+        }.execute();
+
+
     }
+
 
 
     class MyContactAdpater extends BaseAdapter{
