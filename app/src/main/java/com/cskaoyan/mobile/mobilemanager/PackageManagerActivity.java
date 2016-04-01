@@ -25,6 +25,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cskaoyan.mobile.bean.AppInfo;
+import com.cskaoyan.mobile.dao.LockAppDao;
+import com.cskaoyan.mobile.service.MyLockAppService;
 import com.cskaoyan.mobile.utils.MyAsyncTast;
 import com.cskaoyan.mobile.utils.MyAsyncTast2;
 import com.cskaoyan.mobile.utils.PackageUtils;
@@ -47,6 +49,7 @@ public class PackageManagerActivity extends ActionBarActivity implements View.On
     private AppInfo current_click_appInfo;
     private MyAsyncTast3 mytask;
     private MyAdapter listadapter;
+    private LockAppDao dao ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +69,7 @@ public class PackageManagerActivity extends ActionBarActivity implements View.On
         userAppinfolist = new ArrayList<>();
         systemAppinfolist = new ArrayList<>();
 
+        dao = new LockAppDao(this);
 
        /* new MyAsyncTast(){
             @Override
@@ -156,14 +160,42 @@ public class PackageManagerActivity extends ActionBarActivity implements View.On
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 
-                Toast.makeText(PackageManagerActivity.this, "Long press", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(PackageManagerActivity.this, "Long press", Toast.LENGTH_SHORT).show();
 
+
+                if (position<userAppinfolist.size()+2){
+                    current_click_appInfo = userAppinfolist.get(position-1);
+                }else
+                {
+                    current_click_appInfo = systemAppinfolist.get(position-userAppinfolist.size()-2);
+                }
                 final ImageView iv_applist_lock = (ImageView) view.findViewById(R.id.iv_applist_lock);
-                iv_applist_lock.setImageResource(R.drawable.lock);
+
+                if (dao.isLocked(current_click_appInfo.getPackagename())){
+                    //解锁
+
+                    iv_applist_lock.setImageResource(R.drawable.unlock);
+                    dao.deleteFromDb(current_click_appInfo.getPackagename());
+
+                }
+                else{
+                    //加锁
+                    iv_applist_lock.setImageResource(R.drawable.lock);
+                    dao.inserttoDb(current_click_appInfo.getPackagename());
+
+                }
+
+
 
                 return true;
             }
         });
+
+
+
+        //启动监听的service
+
+        startService(new Intent(this, MyLockAppService.class));
 
     }
 
