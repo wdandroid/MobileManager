@@ -1,7 +1,11 @@
 package com.cskaoyan.mobile.mobilemanager;
 
+import android.util.Log;
+
 import com.cskaoyan.mobile.dao.LockAppDao;
 import com.cskaoyan.mobile.db.MyLockAppDBHelper;
+
+import java.util.List;
 
 /**
  * Created by Lan on 2016/4/1.
@@ -30,6 +34,20 @@ public class MyDBTest extends  MyAndroidTestCase{
         LockAppDao dao = new LockAppDao(getContext());
 
         assertEquals(1, dao.deleteFromDb("com.cskaoyan.myapp"));
+
+
+    }
+
+    public void testQueryall(){
+
+        LockAppDao dao = new LockAppDao(getContext());
+
+//        assertEquals(1, dao.deleteFromDb("com.cskaoyan.myapp"));
+
+        final List<String> allLockedApp = dao.getAllLockedApp();
+        for (String appname : allLockedApp) {
+            Log.i("tag", appname);
+        }
 
 
     }

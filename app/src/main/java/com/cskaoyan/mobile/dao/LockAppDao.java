@@ -4,8 +4,13 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 
 import com.cskaoyan.mobile.db.MyLockAppDBHelper;
+import com.cskaoyan.mobile.provider.MyAppLockProvider;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Lan on 2016/4/1.
@@ -17,19 +22,28 @@ public class LockAppDao {
 
     private MyLockAppDBHelper helper;
     final SQLiteDatabase db;
+    private Context ctx;
+
+    MyAppLockProvider provider;
     public LockAppDao(Context ctx) {
 
 
         helper = new MyLockAppDBHelper(ctx,"lockapp.db",null,1);
         db = helper.getReadableDatabase();
+        this.ctx=ctx;
     }
 
     public long  inserttoDb(String pkg){
 
+       /* ContentValues cv=new ContentValues();
+        cv.put("packagename", pkg);
+        return db.insert("lockapp",null,cv);*/
+
         ContentValues cv=new ContentValues();
         cv.put("packagename", pkg);
-        return db.insert("lockapp",null,cv);
+         ctx.getContentResolver().insert(Uri.parse("content://com.cskaoyan.app"), cv);
 
+        return  0;
     }
 
 
@@ -38,7 +52,7 @@ public class LockAppDao {
     public int deleteFromDb(String pkg){
 
         String[] args={pkg};
-        return   db.delete("lockapp","packagename=?",args);
+        return  ctx.getContentResolver().delete(Uri.parse("content://com.cskaoyan.app"), "packagename=?",args);
     }
 
 
@@ -52,6 +66,24 @@ public class LockAppDao {
             flag = true;
 
         return flag;
+    }
+
+
+    public List<String> getAllLockedApp(){
+
+        List<String> lockedapplist = new ArrayList<>();
+
+        final Cursor cursor = db.rawQuery("select packagename from lockapp  ",null);
+
+        while (cursor.moveToNext()){
+
+            final String packagename = cursor.getString(0);
+
+            lockedapplist.add(packagename);
+        }
+
+
+        return  lockedapplist;
     }
 
 }

@@ -66,6 +66,8 @@ public class PackageManagerActivity extends ActionBarActivity implements View.On
 
         lv_package_appinfo = (ListView) findViewById(R.id.lv_package_appinfo);
 
+
+
         userAppinfolist = new ArrayList<>();
         systemAppinfolist = new ArrayList<>();
 
@@ -162,6 +164,8 @@ public class PackageManagerActivity extends ActionBarActivity implements View.On
 
 //                Toast.makeText(PackageManagerActivity.this, "Long press", Toast.LENGTH_SHORT).show();
 
+                final ImageView iv_applist_lock = (ImageView) view.findViewById(R.id.iv_applist_lock);
+
 
                 if (position<userAppinfolist.size()+2){
                     current_click_appInfo = userAppinfolist.get(position-1);
@@ -169,7 +173,6 @@ public class PackageManagerActivity extends ActionBarActivity implements View.On
                 {
                     current_click_appInfo = systemAppinfolist.get(position-userAppinfolist.size()-2);
                 }
-                final ImageView iv_applist_lock = (ImageView) view.findViewById(R.id.iv_applist_lock);
 
                 if (dao.isLocked(current_click_appInfo.getPackagename())){
                     //解锁
@@ -413,11 +416,13 @@ public class PackageManagerActivity extends ActionBarActivity implements View.On
                   ImageView iv_applist_icon = (ImageView) item.findViewById(R.id.iv_applist_icon);
                   TextView tv_applist_appname = (TextView) item.findViewById(R.id.tv_applist_appname);
                   TextView tv_applist_location = (TextView) item.findViewById(R.id.tv_applist_location);
+                  ImageView iv_applist_lock = (ImageView) item.findViewById(R.id.iv_applist_lock);
 
                   holder = new ViewHolder();
                   holder.iv_applist_icon=iv_applist_icon;
                   holder.tv_applist_appname =tv_applist_appname;
                   holder.tv_applist_location=tv_applist_location;
+                  holder.iv_applist_lock =iv_applist_lock;
 
                   item.setTag(holder);
             }
@@ -433,6 +438,12 @@ public class PackageManagerActivity extends ActionBarActivity implements View.On
             else
                 holder.tv_applist_location.setText("安装在ROM上");
 
+            if (dao.isLocked(appInfo.getPackagename())){
+                holder.iv_applist_lock.setImageResource(R.drawable.lock);
+
+            }else{
+                holder.iv_applist_lock.setImageResource(R.drawable.unlock);
+            }
             return item;
         }
 
@@ -442,6 +453,7 @@ public class PackageManagerActivity extends ActionBarActivity implements View.On
             ImageView iv_applist_icon;
             TextView tv_applist_appname;
             TextView tv_applist_location;
+            ImageView iv_applist_lock;
         }
     }
 
