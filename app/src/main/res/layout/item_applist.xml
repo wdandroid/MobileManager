@@ -28,6 +28,6 @@
         android:layout_height="30dp"
         android:id="@+id/iv_applist_lock"
         android:layout_alignParentRight="true"
-        android:src="@drawable/lock"/>
+        android:src="@drawable/unlock"/>
 
 </RelativeLayout>
