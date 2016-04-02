@@ -103,6 +103,15 @@
             android:authorities="com.cskaoyan.app" />
 
         <activity android:name=".ProcessManagerActivity"></activity>
+
+
+        <receiver android:name="com.cskaoyan.mobile.widget.MyAppWidgetProvider" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider"
+                android:resource="@xml/example_appwidget_info" />
+        </receiver>
     </application>
 
 </manifest>

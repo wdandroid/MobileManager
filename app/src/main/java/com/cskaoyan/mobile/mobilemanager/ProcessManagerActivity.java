@@ -4,12 +4,15 @@ import android.app.ActivityManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.format.Formatter;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RemoteViews;
 import android.widget.TextView;
 
 import com.cskaoyan.mobile.bean.ProcessInfo;
@@ -21,6 +24,7 @@ import java.util.List;
 
 public class ProcessManagerActivity extends ActionBarActivity {
 
+    private static final String TAG ="ProcessManagerActivity" ;
     private ListView lv_process_appinfo;
 
     List<ProcessInfo> processInfoList;
@@ -67,6 +71,38 @@ public class ProcessManagerActivity extends ActionBarActivity {
         myAdpater = new MyAdpater();
         lv_process_appinfo.setAdapter(myAdpater);
 
+        lv_process_appinfo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Log.i(TAG,"onItemClick");
+                ProcessInfo current_processInfo;
+                if (onlyshowuser)
+                    current_processInfo =userprocessInfoList.get(position);
+                else
+                    current_processInfo = processInfoList.get(position);
+
+                CheckBox cb_processlist_check = (CheckBox) view.findViewById(R.id.cb_processlist_check);
+
+
+                Log.i(TAG,"onItemClick"+current_processInfo.isCheck());
+
+                if (current_processInfo.isCheck()){
+
+                    current_processInfo.setIsCheck(false);
+                    cb_processlist_check.setChecked(false);
+                }else{
+
+                    current_processInfo.setIsCheck(true);
+                    cb_processlist_check.setChecked(true);
+
+                }
+
+
+
+            }
+        });
+
     }
 
 
@@ -107,8 +143,8 @@ public class ProcessManagerActivity extends ActionBarActivity {
                 processInfo = processInfoList.get(position);
 
 
-            final View view = View.inflate(ProcessManagerActivity.this, R.layout.item_processlist, null);
 
+            final View view = View.inflate(ProcessManagerActivity.this, R.layout.item_processlist, null);
 
             ImageView iv_processlist_icon = (ImageView) view.findViewById(R.id.iv_processlist_icon);
             TextView tv_processlist_appname = (TextView) view.findViewById(R.id.tv_processlist_appname);
@@ -172,11 +208,42 @@ public class ProcessManagerActivity extends ActionBarActivity {
 
 
         final ActivityManager ams = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
-        for (ProcessInfo pp : processInfoList) {
 
-            if (pp.isCheck())
-                ams.killBackgroundProcesses(pp.getPackagename());
-         }
+        List<ProcessInfo> deleteProclist = new ArrayList<>();
+        if (onlyshowuser){
+            for (ProcessInfo pp : userprocessInfoList) {
+                if (pp.isCheck()){
+
+                    ams.killBackgroundProcesses(pp.getPackagename());
+//                    userprocessInfoList.remove(pp);
+                    deleteProclist.add(pp);
+
+                }
+            }
+
+            for (ProcessInfo p:deleteProclist){
+
+                userprocessInfoList.remove(p);
+            }
+        }
+        else{
+            for (ProcessInfo pp : processInfoList) {
+                if (pp.isCheck()){
+                    ams.killBackgroundProcesses(pp.getPackagename());
+//                  processInfoList.remove(pp);
+                    deleteProclist.add(pp);
+                }
+            }
+
+            for (ProcessInfo p:deleteProclist){
+                processInfoList.remove(p);
+            }
+
+        }
+
+
+        myAdpater.notifyDataSetChanged();
+
 
 
     }
