@@ -11,7 +11,7 @@
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.GET_TASKS" />
-
+    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES"/>
     <application
         android:name="com.cskaoyan.mobile.application.MyApplication"
         android:allowBackup="true"
@@ -94,12 +94,15 @@
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".LockAppActivity"
-            android:launchMode="singleInstance"></activity>
+        <activity
+            android:name=".LockAppActivity"
+            android:launchMode="singleInstance" />
 
         <provider
-            android:authorities="com.cskaoyan.app"
-            android:name="com.cskaoyan.mobile.provider.MyAppLockProvider"></provider>
+            android:name="com.cskaoyan.mobile.provider.MyAppLockProvider"
+            android:authorities="com.cskaoyan.app" />
+
+        <activity android:name=".ProcessManagerActivity"></activity>
     </application>
 
 </manifest>

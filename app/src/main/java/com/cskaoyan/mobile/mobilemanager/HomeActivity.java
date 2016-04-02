@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.cskaoyan.mobile.application.MyApplication;
 import com.cskaoyan.mobile.utils.Md5Utils;
+import com.cskaoyan.mobile.utils.ProcessUtils;
 
 public class HomeActivity extends ActionBarActivity {
 
@@ -101,7 +102,8 @@ public class HomeActivity extends ActionBarActivity {
 //                    Toast.makeText(HomeActivity.this,titles[position],Toast.LENGTH_LONG).show();
                     break;
                 case 3:
-                    Toast.makeText(HomeActivity.this,titles[position],Toast.LENGTH_LONG).show();
+                    //Toast.makeText(HomeActivity.this,titles[position],Toast.LENGTH_LONG).show();
+                    startActivity(new Intent(HomeActivity.this,ProcessManagerActivity.class));
                     break;
                 case 4:
                     Toast.makeText(HomeActivity.this,titles[position],Toast.LENGTH_LONG).show();
