@@ -109,7 +109,9 @@ public class HomeActivity extends ActionBarActivity {
                     Toast.makeText(HomeActivity.this,titles[position],Toast.LENGTH_LONG).show();
                     break;
                 case 5:
-                    Toast.makeText(HomeActivity.this,titles[position],Toast.LENGTH_LONG).show();
+//                    Toast.makeText(HomeActivity.this,titles[position],Toast.LENGTH_LONG).show();
+                    startActivity(new Intent(HomeActivity.this,ScanVirusActivity.class));
+
                     break;
                 case 6:
 //                    Toast.makeText(HomeActivity.this,titles[position],Toast.LENGTH_LONG).show();

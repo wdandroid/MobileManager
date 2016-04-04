@@ -20,6 +20,7 @@
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:progressDrawable="@drawable/pb_cache_bg"
         android:id="@+id/pb_clearcache_scan" />
 
     <TextView
@@ -27,6 +28,15 @@
         android:layout_height="wrap_content"
         android:id="@+id/tv_clearcache_appname"/>
 
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="clearcache"
+        android:text="清除缓存"
+        android:id="@+id/bt_clearcache_clear"
+        android:visibility="gone"
+        />
     <ListView android:layout_width="match_parent"
           android:layout_height="wrap_content"
         android:id="@+id/lv_clearcache_cachelist"/>

@@ -76,22 +76,23 @@ public class SplashActivity extends Activity {
         else
             waitaWhile();
 
-        copydb();
+        copydb("naddress.db");
+        copydb("antivirus.db");
 
     }
 
     //将数据库从assets目录下 copy到 data/data/packagename/
-    private void copydb() {
+    private void copydb(String dbname) {
 
 
         try {
 
-            File db=new File("data/data/"+getPackageName()+"/location.db");
+            File db=new File("data/data/"+getPackageName()+"/"+dbname);
             if (db.exists())
                 return;
 
             final AssetManager assets = getAssets();
-            final InputStream open = assets.open("naddress.db");
+            final InputStream open = assets.open(dbname);
             FileOutputStream fos = new FileOutputStream(db);
 
             byte[] bytes= new byte[1024];
