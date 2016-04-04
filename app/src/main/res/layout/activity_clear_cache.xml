@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:orientation="vertical"
+    tools:context="com.cskaoyan.mobile.mobilemanager.ClearCacheActivity">
+
+    <TextView
+        style="@style/myPageTile"
+        android:text="缓存清理"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="扫描情况"/>
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/pb_clearcache_scan" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_clearcache_appname"/>
+
+    <ListView android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+        android:id="@+id/lv_clearcache_cachelist"/>
+
+</LinearLayout>
