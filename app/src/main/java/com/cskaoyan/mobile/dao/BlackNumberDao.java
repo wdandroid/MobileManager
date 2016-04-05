@@ -98,8 +98,8 @@ public class BlackNumberDao {
 
         while (cursor.moveToNext()){
 
-            final int mode = cursor.getInt(1);
-            final String number = cursor.getString(0);
+            final String number = cursor.getString(1);
+            final int mode = cursor.getInt(2);
 
 
 
