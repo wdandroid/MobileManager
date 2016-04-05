@@ -118,7 +118,8 @@
         </receiver>
 
         <activity android:name=".ClearCacheActivity" />
-        <activity android:name=".ScanVirusActivity"></activity>
+        <activity android:name=".ScanVirusActivity" />
+        <activity android:name=".TelephoneManagerActivity"></activity>
     </application>
 
 </manifest>

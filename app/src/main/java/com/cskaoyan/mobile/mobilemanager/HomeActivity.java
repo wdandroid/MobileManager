@@ -87,13 +87,12 @@ public class HomeActivity extends ActionBarActivity {
 
                    }
 
-
-
                    // startActivity(new Intent(HomeActivity.this,PhoneSafeActivity.class));
 
                     break;
                 case 1:
-                    Toast.makeText(HomeActivity.this,titles[position],Toast.LENGTH_LONG).show();
+//                    Toast.makeText(HomeActivity.this,titles[position],Toast.LENGTH_LONG).show();
+                    startActivity(new Intent(HomeActivity.this,TelephoneManagerActivity.class));
 
                     break;
                 case 2:
