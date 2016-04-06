@@ -14,7 +14,7 @@
     <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
     <uses-permission android:name="android.permission.GET_PACKAGE_SIZE" />
     <uses-permission android:name="android.permission.CLEAR_APP_CACHE" />
-    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
         android:name="com.cskaoyan.mobile.application.MyApplication"
@@ -125,7 +125,9 @@
         <service
             android:name="com.cskaoyan.mobile.service.BlackNumberService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
+
+        <activity android:name=".DataUsageActivity"></activity>
     </application>
 
 </manifest>

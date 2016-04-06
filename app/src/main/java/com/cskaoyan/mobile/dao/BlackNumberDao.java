@@ -89,25 +89,52 @@ public class BlackNumberDao {
     }
 
     //回显所有已经加入到黑名单的数据
+    //有非常多的数据，此时可以优化
+    // UI并不需要一次返回所有的条目，因为每次屏幕显示的条数是有限的。
+    // 所以这里可以返回指定条目数的 数据List
+
 
     public List<TelephoneManagerActivity.listitem> getallBlacknumber(){
-
         List<TelephoneManagerActivity.listitem> blacklist = new ArrayList<>();
-
         final Cursor cursor = db.rawQuery("select * from blacknumber  ", null);
-
         while (cursor.moveToNext()){
-
             final String number = cursor.getString(1);
             final int mode = cursor.getInt(2);
-
-
-
             blacklist.add(new TelephoneManagerActivity.listitem(number,mode) );
-
          }
         return  blacklist;
     }
 
 
+    //返回查询数据库的指定集合
+    public List<TelephoneManagerActivity.listitem> getallPartBlacknumber(int offset ,int limit){
+
+
+        List<TelephoneManagerActivity.listitem> blacklist = new ArrayList<>();
+
+        //limit 表示限制返回的条目数
+        //offset 表示查询开始时的游标偏移位置
+//        final Cursor cursor = db.rawQuery("select * from blacknumber limit   ? offset  ?  ", new String[]{limit+"",offset+""});
+
+        //注意sql 分批查询的语法 select * from blacknumber limit 20,10;
+        final Cursor cursor = db.query("blacknumber", null, null,null, null, null, null, offset +","+limit);
+        while (cursor.moveToNext()){
+            final String number = cursor.getString(1);
+            final int mode = cursor.getInt(2);
+            blacklist.add(new TelephoneManagerActivity.listitem(number,mode) );
+        }
+        return  blacklist;
+    }
+
+    public int getTotalRecordNumber() {
+        int count =0;
+
+
+        final Cursor cursor = db.rawQuery("select Count(*) from blacknumber  ", null);
+        cursor.moveToNext();
+        count = cursor.getInt(0);
+
+
+        return count;
+    }
 }

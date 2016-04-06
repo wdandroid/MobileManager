@@ -92,7 +92,7 @@ public class PackageUtils {
         for (ApplicationInfo appinfo: installedApplications) {
             //应用名字，应用图片，应用是否安装在SDcard上
             String packagename = appinfo.packageName;
-            final CharSequence lable = appinfo.loadLabel(packageManager);
+             final CharSequence lable = appinfo.loadLabel(packageManager);
             final Drawable icon = appinfo.loadIcon(packageManager);
             boolean isSDCARD;
             boolean isSystem;

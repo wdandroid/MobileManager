@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -23,6 +24,8 @@ import java.util.List;
 
 public class TelephoneManagerActivity extends ActionBarActivity {
 
+    private static final String TAG = "TelephoneManagerActivity";
+    private static   int TOTALRECORD   ;
     private Button bt_phonemanager_add;
     private BlackNumberDao dao ;
     private ListView lv_phonemanager_blacknum;
@@ -30,6 +33,9 @@ public class TelephoneManagerActivity extends ActionBarActivity {
     private List<listitem> blacknumberlist;
     private MyBlacknumberListAdapter myBlacknumberListAdapter;
 
+
+    private static final int LIMIT =10;
+    private   int offset =0;
 
     public static class listitem{
 
@@ -39,6 +45,14 @@ public class TelephoneManagerActivity extends ActionBarActivity {
         public listitem(String blacknum, int mode) {
             this.blacknum = blacknum;
             this.mode = mode;
+        }
+
+        @Override
+        public String toString() {
+            return "listitem{" +
+                    "blacknum='" + blacknum + '\'' +
+                    ", mode=" + mode +
+                    '}';
         }
     }
 
@@ -52,7 +66,13 @@ public class TelephoneManagerActivity extends ActionBarActivity {
 
 
         dao = new BlackNumberDao(this);
-        blacknumberlist = dao.getallBlacknumber();
+//        优化
+//        blacknumberlist = dao.getallBlacknumber();
+
+        TOTALRECORD = dao.getTotalRecordNumber();
+        blacknumberlist =dao.getallPartBlacknumber(offset,LIMIT);
+
+
         myBlacknumberListAdapter = new MyBlacknumberListAdapter();
         lv_phonemanager_blacknum.setAdapter(myBlacknumberListAdapter);
 
@@ -183,6 +203,42 @@ public class TelephoneManagerActivity extends ActionBarActivity {
                         .show();
 
                 return true;
+            }
+        });
+
+        lv_phonemanager_blacknum.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+                switch (scrollState) {
+
+                    case AbsListView.OnScrollListener.SCROLL_STATE_IDLE:
+
+
+                        if ( (view.getLastVisiblePosition()  ==blacknumberlist.size()-1)&&(blacknumberlist.size()<TOTALRECORD)){ //滑动到当前list的最后一条数据，并停止的时候去加载更多数据
+                            //可以在这里去load更多数据，
+                            final List<listitem> listitems = dao.getallPartBlacknumber(offset + LIMIT, LIMIT);
+                            Log.i(TAG,"offset =" + offset +" LImit="+LIMIT);
+                            offset+=LIMIT;
+                            //怎么去更新数据集？使用集合的addall，把另一集合完全加到当前集合。
+                            blacknumberlist.addAll(listitems);
+                            myBlacknumberListAdapter.notifyDataSetChanged();
+                        }
+
+
+
+                        break;
+                    case AbsListView.OnScrollListener.SCROLL_STATE_FLING:
+                        break;
+                    case AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL:
+                        break;
+                }
+
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+
             }
         });
 
